@@ -1,0 +1,153 @@
+PS C:\Aria-Fhir-Clone\fhir> docker-compose -f docker-compose-pactbroker.yml up
+PS C:\Aria-Fhir-Clone\fhir> git checkout srijan/dev-srijan
+PS C:\Aria-Fhir-Clone\fhir> git branch
+PS C:\Aria-Fhir-Clone\fhir> git fetch
+
+
+
+matchers 
+
+.integerType()
+.stringType()
+
+.eachKeyLike("resourceType")
+
+
+
+
+changes made 
+.stringValue("resourceType", "Patient")
+            .eachKeyLike("resourceType")
+			
+
+
+plugins {
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "au.com.dius.pact" version "4.3.6"
+}
+
+
+pact {
+    publish {
+        pactBrokerUrl = 'http://localhost:9292/'
+		pactDirectory = file("$buildDir/target/pacts")
+    }
+}
+
+
+
+FHIR api 
+localhost:44376/fhir/Patient/Patient-96
+
+
+
+
+To start the pactbroker we need to use the docker to fetch the image so that the environment setup is done 
+PS C:\Aria-Fhir-Clone\fhir> docker-compose -f docker-compose-pactbroker.yml up  
+
+
+How to publish a pact to pactbroker
+
+add this to plugins
+plugins{
+		id 'au.com.dius.pact' version '4.1.11'
+		
+		}
+		
+		
+and also add 
+pact {
+    publish {
+        pactDirectory="target/pacts"
+        pactBrokerUrl = 'http://localhost:9292/'
+
+    }
+
+}
+
+make these changes to the build.gradle file 
+
+
+after this start the application and start the docker engine and use command 
+
+ docker-compose -f docker-compose-pactbroker.yml up
+
+to start the dcoker engine
+
+
+after this in the terminal in local2 we need to publish the contract to the broker
+
+./gradle pactPublish
+
+
+
+
+commands to stash your changes and fetch and checkout to new branch ,commit the changes,push your changes,raise PR
+
+git stash
+
+git status
+
+git fetch
+
+git checkout fhir-contract
+
+git stash pop
+
+git add build.gradle
+
+git status
+ 
+git commit -m "added pact task"
+
+git status
+
+ git push origin fhir-contract
+
+
+
+
+wd982782@varianm365.com
+
+
+
+
+
+
+how to pull a request 
+
+git pull origin srijan/dev-srijan
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Patient - Read, Search 
+
+Appointment - Read, Post, Put, Search 
+
+Task - Read, Post, Put, Search
+
+http://{{base_url}}:44376/fhir/Task
+http://{{base_url}}:44376/fhir/Task/Task-1
+
+should_create_a_task_with_patient_and_without_parent_appointment
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+ALTER DATABASE VARIAN SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+
+RESTORE DATABASE VARIAN
+FROM DISK = 'C:\CI_DB_Back_Up\VARIAN' WITH REPLACE
+
+ALTER DATABASE VARIAN SET MULTI_USER WITH ROLLBACK IMMEDIATE
+
+------------------------------------------------------------------------------------------------------------------------------
+
+https://shrib.com/#vk1
+
+online site for sharing something on the cloud mainly used for copy
