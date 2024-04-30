@@ -1,0 +1,13 @@
+	static void databaseConnection() throws Exception {
+		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		String dbURL = "jdbc:sqlserver://localhost:1433;databaseName=stockDB;integratedSecurity=true;encrypt=false";
+		Connection conn = DriverManager.getConnection(dbURL);
+		if (conn != null) {
+			System.out.println("Connected");
+			Statement statement = conn.createStatement();
+			ResultSet result = statement.executeQuery("Select * from stock_transactions");
+			while (result.next()){
+				System.out.println(result.getString(2));
+			}
+		}
+	}
